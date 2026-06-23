@@ -1,0 +1,76 @@
+#include <iostream>
+using namespace std;
+
+typedef struct no{
+    int item;
+    struct no *prox;
+
+}*No;
+
+typedef struct pilha{
+    No topo;
+    int tamanho;
+}Pilha;
+
+int inicializar(Pilha *pilha){
+    pilha->topo=NULL;
+    pilha->tamanho = 0;
+}
+
+int esta_vazia(Pilha pilha){
+    return pilha.topo==NULL;
+}
+
+int empilhar(Pilha *pilha, int item){
+    No no = (No) malloc(sizeof(struct no));
+    if(no == NULL){
+        return 0;
+    }
+
+    no->item = item;
+    no->prox = pilha->topo;
+    pilha->topo = no;
+    pilha->tamanho++;
+
+    return 1;
+}
+
+int desempilhar(Pilha *pilha, int *item){
+    if(esta_vazia(*pilha)) return 0;
+
+    No p = pilha->topo;
+    *item = p->item;
+    pilha->topo = p->prox;
+
+    free(p);
+    pilha->tamanho--;
+    return 1;
+        
+}
+
+int espiar_topo(Pilha pilha, int *item){
+    if(esta_vazia(pilha)){
+        return 0;
+    }
+
+    *item = pilha.topo->item;
+    return 1;
+}
+
+int mostrar_pilha(Pilha pilha){
+    if(esta_vazia(pilha)){
+        cout<<"Esta vazia\n";
+        return 0;
+    }
+    printf("A pilha possui %d elementos:", pilha.tamanho);
+    while(pilha.topo != NULL){
+        printf("\t%d\n",pilha.topo->item);
+        pilha.topo = pilha.topo->prox;
+    }
+    return 1;
+}
+
+int main(){
+    
+    return 0;
+}
