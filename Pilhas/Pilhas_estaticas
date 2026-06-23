@@ -1,0 +1,68 @@
+#include <iostream>
+using namespace std;
+
+#define TAM_PILHA 10
+typedef struct estrutura{
+    int itens[TAM_PILHA];
+    int topo;
+
+}Pilha;
+
+void inicializar(Pilha *pilha){
+    pilha->topo = -1;
+}
+
+int esta_vazia(Pilha *pilha){
+    if(pilha->topo == -1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+int esta_cheia(Pilha *pilha){
+    if(pilha -> topo == TAM_PILHA-1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+
+int empilhar (Pilha *pilha, int item){
+    if(esta_cheia(pilha)){
+        return 0;
+    }
+    pilha->topo++;
+    pilha->itens[pilha->topo] = item;
+
+    return 1;
+}
+
+int desempilhar(Pilha *pilha,int *item){
+    if(esta_vazia(pilha)){
+        return 0;
+    }
+    *item = pilha->itens[pilha->topo];
+    pilha->topo --;
+    return 1;
+
+
+}
+
+int espiar_topo(Pilha *pilha,int *item_topo){
+    if(esta_vazia(pilha)){
+        return 0;
+    }
+    *item_topo = pilha->itens[pilha->topo];
+    return 1; 
+
+}
+
+
+int main(){
+
+    return 0;
+}
