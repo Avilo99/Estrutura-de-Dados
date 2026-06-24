@@ -1,0 +1,114 @@
+#include <iostream>
+#include <cctype>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+typedef struct no{
+    int item;
+    int menor;
+    struct no *prox;
+
+}*No;
+
+typedef struct pilha{
+    No topo;
+    int tamanho;
+}Pilha;
+
+void inicializar(Pilha *pilha){
+    pilha->topo = NULL;
+    pilha->tamanho = 0;
+}
+
+int esta_vazia(Pilha pilha){
+    return pilha.topo == NULL;// 1-> se estiver NULL  | 0-> se nao for
+}
+
+int empilhar(Pilha *pilha,int item){
+    No no = (No) malloc(sizeof(struct no));
+    if(no == NULL) return 0;
+    if(esta_vazia(*pilha)){
+        no->menor = item;
+    }
+    else{
+        no->menor = min(item, pilha->topo->menor);
+    }
+    no->item = item;
+    no->prox = pilha->topo;
+    pilha->topo = no;
+    pilha->tamanho++;
+    return 1;
+}
+
+int desempilhar(Pilha *pilha){
+    if(esta_vazia(*pilha)){
+        printf("EMPTY\n");
+        return 0;
+    }
+    No p = pilha->topo;//ponteiro para o topo nao é um nó novo
+    
+    pilha->topo = p->prox;
+    free(p);
+    pilha->tamanho--;
+    
+    return 1;
+}
+
+void maiuscula(string &palavra){
+    for(int i = 0; i<palavra.length();i++){
+        palavra[i] = toupper(palavra[i]);
+    }
+}
+
+int menor_valor(Pilha pilha){
+    if(esta_vazia(pilha)){
+        printf("EMPTY\n");
+        return 0;
+    }
+    
+    
+    printf("%d\n",pilha.topo->menor);
+    return 1;
+
+
+}
+
+
+int main(){
+    cout<<"\033[H\033[J";
+    int vezes;
+    cin>>vezes;
+    cin.ignore();//remove o '\n'
+    string palavra;
+    Pilha pilha;
+    inicializar(&pilha);
+
+    for(int i = 0 ; i < vezes ; i++){
+        getline(cin,palavra);
+        maiuscula(palavra);
+        //cout<<palavra<<"\n";
+        int j=0;
+        while(j < palavra.length() && palavra[j]!= ' '){
+            j++;
+        }
+        string comando = palavra.substr(0,j);
+        if(comando == "PUSH"){// se houver "PUSH" na palavra
+            string valorStr = palavra.substr(j+1);
+            int valor = stoi(valorStr);// converte de string pra inteiro
+            empilhar(&pilha,valor);
+        }
+        else if(comando == "POP"){
+            desempilhar(&pilha);
+        }
+        else if(comando == "MIN"){
+            
+            menor_valor(pilha);
+            
+        }
+    }
+
+    
+
+    return 0;
+}
